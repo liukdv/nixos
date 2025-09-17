@@ -1,36 +1,21 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  # Bootloader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+  # Hostname & networking
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
+  # Locale
   time.timeZone = "Europe/Rome";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "it_IT.UTF-8";
     LC_IDENTIFICATION = "it_IT.UTF-8";
@@ -43,12 +28,10 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
-  # Enable the X11 windowing system.
+  # Enable X11 + KDE Plasma
   services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -56,10 +39,10 @@
     variant = "colemak";
   };
 
-  # Enable CUPS to print documents.
+  # Printing
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
+  # Sound (PipeWire instead of PulseAudio)
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -67,43 +50,31 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.liukdv = {
+  # User
+  users.users.luca = {
     isNormalUser = true;
-    description = "liukdv";
+    description = "luca";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    
     ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # Packages
   environment.systemPackages = with pkgs; [
-	firefox
-	keyd
-	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-	wget
+    amule calibre discord firefox gedit git google-chrome gparted handbrake
+    kdePackages.kate keyd libreoffice-qt6-fresh mpv obsidian obs-studio speedcrunch
+    spotify solaar steam telegram-desktop vim vscode xournalpp wget
   ];
 
-# key mapping
-services.keyd = {
-  enable = true;
-  keyboards.default = {
+  # key mapping
+  services.keyd = {
+   enable = true;
+   keyboards.default = {
     ids = [ "*" ];
     settings = {
       main = {
@@ -117,19 +88,19 @@ services.keyd = {
         equal = "f12";
 
         # ---------- Colemak-intended combos (translated to QWERTY keys) ----------
-        a = "leftalt";     # Colemak 'a'  
-        d = "leftshift";   # Colemak 's'  
-        f = "ctrl";    # Colemak 't'  
-        q = "escape";      # Colemak 'q'  
-        e = "back";        # Colemak 'f'  
-        r = "forward";     # Colemak 'p'  
-        w = "C-S-z";         # Colemak 'w'  
-        z = "C-z";         # Colemak 'z'  
+        a = "leftalt";     # Colemak 'a'
+        d = "leftshift";   # Colemak 's'
+        f = "ctrl";    # Colemak 't'
+        q = "escape";      # Colemak 'q'
+        e = "back";        # Colemak 'f'
+        r = "forward";     # Colemak 'p'
+        w = "C-S-z";         # Colemak 'w'
+        z = "C-z";         # Colemak 'z'
 
         # ---------- Navigation & editing (kept where non-conflicting) ----------
-        i = "up"; k = "down"; j = "left"; l = "right";  
-        # s = "down";   w = "up"                                   # mouse down/up? 
-        y = "pageup"; h = "pagedown"; u = "home"; o = "end";                        
+        i = "up"; k = "down"; j = "left"; l = "right";
+        # s = "down";   w = "up"                                   # mouse down/up?
+        y = "pageup"; h = "pagedown"; u = "home"; o = "end";
 
 
         # Text editing
@@ -156,35 +127,20 @@ services.keyd = {
         apostrophe = "menu"; slash = "compose";
       };
     };
+   };
   };
-};
-# end keymapping
+  # end keymapping
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
 
-  # List services that you want to enable:
+  # Enable flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
-
+  # State version
+  system.stateVersion = "25.05";
 }
