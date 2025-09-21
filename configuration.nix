@@ -13,6 +13,10 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
+  # Bluetooth
+  services.blueman.enable = true;        # optional, GUI manager
+  hardware.bluetooth.enable = true;      # enables Bluetooth support
+
   # Locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -68,7 +72,7 @@
   environment.systemPackages = with pkgs; [
     amule calibre discord firefox gedit git google-chrome gparted handbrake
     kdePackages.kate keyd libreoffice-qt6-fresh mpv obsidian obs-studio speedcrunch
-    spotify solaar steam telegram-desktop vim vscode xournalpp wget
+    qmk spotify solaar steam telegram-desktop vim vscode xournalpp wget
   ];
 
   # key mapping
