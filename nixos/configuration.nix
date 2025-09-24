@@ -102,10 +102,65 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    amule audacity azure-cli bind calibre cargo discord docker efibootmgr firefox git google-chrome google-cloud-sdk-gce 
-    gparted handbrake keyd kubectl libreoffice libnotify mpv nix-prefetch-git neovim obsidian obs-studio ollama 
-    podman postman protonvpn-gui speedcrunch qmk rustc spotify solaar steam telegram-desktop terraform vim 
-    unetbootin virtualbox vlc vscode xournalpp wget
+  # System utilities
+  bind
+  efibootmgr
+  gparted
+  keyd
+  libnotify
+  qmk
+  solaar
+  unetbootin
+  wget
+
+  # Development tools
+  azure-cli
+  cargo
+  docker
+  git
+  google-cloud-sdk-gce
+  kubectl
+  nix-prefetch-git
+  neovim
+  ollama
+  podman
+  postman
+  python311
+  rustc
+  terraform
+  uv
+  vim
+  vscode
+
+  # Media & productivity
+  audacity
+  calibre
+  handbrake
+  libreoffice
+  mpv
+  obs-studio
+  obsidian
+  speedcrunch
+  vlc
+  xournalpp
+
+  # Internet & communication
+  amule
+  discord
+  firefox
+  google-chrome
+  protonvpn-gui
+  spotify
+  telegram-desktop
+
+  # Gaming
+  steam
+
+  # Virtualization
+  virtualbox
+
+  # Work
+  teams-for-linux
   ];
   
      

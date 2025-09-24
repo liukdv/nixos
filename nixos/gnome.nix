@@ -14,6 +14,7 @@
      gnomeExtensions.clipboard-indicator
      gnomeExtensions.gtile
      gnomeExtensions.hibernate-status-button
+     gnomeExtensions.dash2dock-lite
      sticky-notes
      dconf-editor
   ];
