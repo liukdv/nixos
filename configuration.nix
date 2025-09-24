@@ -1,23 +1,37 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports =
+    [ 
+      ./hardware-configuration.nix
+      ./gnome.nix
+      ./nvidia.nix
+      ./keyd.nix
+      ./fixdell.nix
+      ./home/bash.nix
+    ];
 
-  # Bootloader
+  
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Hostname & networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
 
   # Bluetooth
   services.blueman.enable = true;        # optional, GUI manager
   hardware.bluetooth.enable = true;      # enables Bluetooth support
+  
 
-  # Locale
+  # Set your time zone / Locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -32,10 +46,12 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
-  # Enable X11 + KDE Plasma
+  # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+
+  # Enable the GNOME Desktop Environment -> done in imported file!
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -43,10 +59,10 @@
     variant = "colemak";
   };
 
-  # Printing
+  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Sound (PipeWire instead of PulseAudio)
+  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -54,12 +70,21 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
   };
 
-  # User
-  users.users.luca = {
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.liukdv = {
     isNormalUser = true;
-    description = "luca";
+    description = "liukdv";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     ];
@@ -68,73 +93,29 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Packages
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    amule calibre discord firefox gedit git google-chrome gparted handbrake
-    kdePackages.kate keyd libreoffice-qt6-fresh mpv obsidian obs-studio speedcrunch
-    qmk spotify solaar steam telegram-desktop vim vscode xournalpp wget
+    amule audacity azure-cli bind calibre cargo discord docker firefox git google-chrome google-cloud-sdk-gce 
+    gparted handbrake keyd kubectl libreoffice libnotify mpv nix-prefetch-git neovim obsidian obs-studio ollama 
+    podman postman protonvpn-gui speedcrunch qmk rustc spotify solaar steam telegram-desktop terraform vim 
+    virtualbox vlc vscode xournalpp wget
   ];
+  
+     
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-  # key mapping
-  services.keyd = {
-   enable = true;
-   keyboards.default = {
-    ids = [ "*" ];
-    settings = {
-      main = {
-        capslock = "layer(extend)";
-      };
-      extend = {
-        # ---------- Number Row: becomes F1-F12 ----------
-        # grave = "f1";
-        "1" = "f1"; "2" = "f2"; "3" = "f3"; "4" = "f4"; "5" = "f5"; "6" = "f6"; "7" = "f7"; "8" = "f8"; "9" = "f9"; "0" = "f10";
-        minus = "f11";
-        equal = "f12";
+  # List services that you want to enable:
 
-        # ---------- Colemak-intended combos (translated to QWERTY keys) ----------
-        a = "leftalt";     # Colemak 'a'
-        d = "leftshift";   # Colemak 's'
-        f = "ctrl";    # Colemak 't'
-        q = "escape";      # Colemak 'q'
-        e = "back";        # Colemak 'f'
-        r = "forward";     # Colemak 'p'
-        w = "C-S-z";         # Colemak 'w'
-        z = "C-z";         # Colemak 'z'
-
-        # ---------- Navigation & editing (kept where non-conflicting) ----------
-        i = "up"; k = "down"; j = "left"; l = "right";
-        # s = "down";   w = "up"                                   # mouse down/up?
-        y = "pageup"; h = "pagedown"; u = "home"; o = "end";
-
-
-        # Text editing
-        # [ = "escape;
-        semicolon = "backspace"; p = "delete";
-        space = "backspace";
-
-        # Clipboard
-        x = "C-x"; c = "C-c"; v = "C-v";
-
-        # Browser / tab management
-        # b = "back"; n = "forward"; m = "refresh";
-        # comma = "C-S-tab"; dot = "C-tab";
-
-        # Media & system
-        f1 = "playpause"; f2 = "prev"; f3 = "next"; f4 = "stop";
-        f5 = "mute"; f6 = "volumedown"; f7 = "volumeup";
-        f8 = "brightnessdown"; f9 = "brightnessup";
-        f10 = "sleep"; f11 = "www"; f12 = "mail";
-
-        # Special keys
-        pause = "mycomputer"; printscreen = "calculator";
-        enter = "printscreen"; leftbrace = "mycomputer";
-        apostrophe = "menu"; slash = "compose";
-      };
-    };
-   };
-  };
-  # end keymapping
-
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+  
   # Steam
   programs.steam = {
     enable = true;
@@ -144,7 +125,20 @@
 
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-  # State version
-  system.stateVersion = "25.05";
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "25.05"; 
+
 }
+
