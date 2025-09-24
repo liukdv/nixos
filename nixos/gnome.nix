@@ -13,6 +13,7 @@
      gnomeExtensions.custom-hot-corners-extended
      gnomeExtensions.clipboard-indicator
      gnomeExtensions.gtile
+     gnomeExtensions.hibernate-status-button
      sticky-notes
      dconf-editor
   ];

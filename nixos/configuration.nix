@@ -11,12 +11,18 @@
       ./home/bash.nix
     ];
 
+  # enable firmware updates 
+  services.fwupd.enable = true; # sudo fwupdmgr refresh | sudo fwupdmgr get-updates | sudo fwupdmgr update
   
-  # Bootloader.
+  # Bootloader - systemd
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = true; 
+  # Enable swap and hibernation
+  swapDevices = [{ device = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246"; }];
+  boot.kernelParams = [ "resume=UUID=baad3773-1ae7-48f0-9cda-099ebe80d246" ];
+  #systemd.services."systemd-hibernate-resume".enable = true;  # not sure
 
-  # Hostname & networking
+  #Hostname & networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -96,10 +102,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    amule audacity azure-cli bind calibre cargo discord docker firefox git google-chrome google-cloud-sdk-gce 
+    amule audacity azure-cli bind calibre cargo discord docker efibootmgr firefox git google-chrome google-cloud-sdk-gce 
     gparted handbrake keyd kubectl libreoffice libnotify mpv nix-prefetch-git neovim obsidian obs-studio ollama 
     podman postman protonvpn-gui speedcrunch qmk rustc spotify solaar steam telegram-desktop terraform vim 
-    virtualbox vlc vscode xournalpp wget
+    unetbootin virtualbox vlc vscode xournalpp wget
   ];
   
      

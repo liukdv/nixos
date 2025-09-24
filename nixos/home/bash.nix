@@ -22,8 +22,13 @@
       
       # Power managment
       shutdown="sudo shutdown -h now";
+      hibernate="systemctl hibernate";
       restart="sudo reboot";
       lock="xdg-screensaver lock";
+
+      # Text editor
+      text="gnome-text-editor";
+      stext="sudo gnome-text-editor";
 
       # Network utility - get your public IP address
       publicip = "dig +short myip.opendns.com @resolver1.opendns.com";
