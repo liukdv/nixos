@@ -15,6 +15,9 @@
      gnomeExtensions.gtile
      gnomeExtensions.hibernate-status-button
      gnomeExtensions.dash2dock-lite
+     gnomeExtensions.media-controls
+     gnomeExtensions.appindicator
+     gradia
      sticky-notes
      dconf-editor
   ];
