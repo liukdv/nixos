@@ -9,6 +9,7 @@
       ./keyd.nix
       ./fixdell.nix
       ./home/bash.nix
+      ./home/git.nix
     ];
 
   # enable firmware updates 
@@ -35,6 +36,10 @@
   # Bluetooth
   services.blueman.enable = true;        # optional, GUI manager
   hardware.bluetooth.enable = true;      # enables Bluetooth support
+
+  # Logitech mouse
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
   
 
   # Set your time zone / Locale
@@ -109,7 +114,7 @@
   keyd
   libnotify
   qmk
-  solaar
+  logitech-udev-rules
   unetbootin
   wget
 
