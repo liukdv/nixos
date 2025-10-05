@@ -17,6 +17,7 @@
      gnomeExtensions.dash2dock-lite
      gnomeExtensions.media-controls
      gnomeExtensions.appindicator
+     #gnomeExtensions.notification-banner-position
      gradia
      sticky-notes
      dconf-editor
