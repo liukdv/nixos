@@ -19,17 +19,16 @@
   };
   
   # lock screen instead of suspend
-  #services.logind = {
-   # Action when no external monitors are connected.
-  # lidSwitch = "lock";
-   # Action when external monitors ARE connected.
-  # lidSwitchDocked = "lock";
-  
-  # Force logind to ignore GNOME's inhibition.
-  # extraConfig = ''
-  #  LidSwitchIgnoreInhibited=true
-  # '';
-  #};
+  # 1) Make logind lock on lid close in all cases (battery, AC, docked)
+  services.logind = {
+    lidSwitch = "lock";
+    lidSwitchDocked = "lock"; # does not work gnome - lock manually
+    lidSwitchExternalPower = "lock"; 
+    extraConfig = ''
+      # Ensure logind handles lid even if GNOME takes an inhibitor
+      LidSwitchIgnoreInhibited=yes # does not work gnome 
+    '';
+  };
 
 #  systemd.services."display-resume" = {
 #  description = "Resume script for external monitors";
