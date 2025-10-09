@@ -24,9 +24,10 @@
     lidSwitch = "lock";
     lidSwitchDocked = "lock"; # does not work gnome - lock manually
     lidSwitchExternalPower = "lock"; 
+   
+    # Ensure logind handles lid even if GNOME takes an inhibitor - does not work on Gnome
     extraConfig = ''
-      # Ensure logind handles lid even if GNOME takes an inhibitor
-      LidSwitchIgnoreInhibited=yes # does not work gnome 
+      LidSwitchIgnoreInhibited=yes
     '';
   };
 

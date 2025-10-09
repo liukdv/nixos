@@ -10,6 +10,7 @@
       ./fixdell.nix
       ./home/bash.nix
       ./home/git.nix
+      ./docker.nix
     ];
 
   # enable firmware updates 
@@ -125,6 +126,7 @@
   git
   google-cloud-sdk-gce
   kubectl
+  minikube
   nix-prefetch-git
   neovim
   ollama
