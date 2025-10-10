@@ -8,8 +8,8 @@
    "pcie_aspm=off" # prevents PCI express bus entering d3cold
   ];   
 
+  # Enable NVIDIA power management services for suspend/resume
   hardware.nvidia = {
-    # Enable NVIDIA power management services for suspend/resume
     powerManagement.enable = true;
   };
 
@@ -18,6 +18,9 @@
     enable = true;
   };
   
+  # Blacklist Thunderbolt - breaks hibernation
+  boot.blacklistedKernelModules = [ "thunderbolt" ];
+  
   # lock screen instead of suspend
   # 1) Make logind lock on lid close in all cases (battery, AC, docked)
   services.logind = {
@@ -25,20 +28,14 @@
     lidSwitchDocked = "lock"; # does not work gnome - lock manually
     lidSwitchExternalPower = "lock"; 
    
-    # Ensure logind handles lid even if GNOME takes an inhibitor - does not work on Gnome
+    # Ensure logind handles lid even if GNOME takes an inhibitor - not sure if works on Gnome
     extraConfig = ''
       LidSwitchIgnoreInhibited=yes
     '';
   };
 
-#  systemd.services."display-resume" = {
-#  description = "Resume script for external monitors";
-#  serviceConfig = {
-#    Type = "oneshot";
-#    ExecStart = "${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --off --output HDMI-1 --off && sleep 1 && ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --output HDMI-1 --auto";
-#  };
-#  wantedBy = [ "suspend.target" "hibernate.target" ];
-#  after = [ "suspend.target" "hibernate.target" ];
-#}; 
- 
+  # More aggressive hibernate
+  systemd.sleep.extraConfig = ''
+    HibernateMode=shutdown
+  '';
 }
