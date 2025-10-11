@@ -122,7 +122,7 @@
   # Development tools
   azure-cli
   cargo
-  docker
+  #docker
   git
   google-cloud-sdk-gce
   kubectl
