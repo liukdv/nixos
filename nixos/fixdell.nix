@@ -37,5 +37,6 @@
   # More aggressive hibernate
   systemd.sleep.extraConfig = ''
     HibernateMode=shutdown
+    FreezerTimeout=3min
   '';
 }
