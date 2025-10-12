@@ -22,6 +22,7 @@
   # Enable swap and hibernation
   swapDevices = [{ device = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246"; }];
   boot.kernelParams = [ "resume=UUID=baad3773-1ae7-48f0-9cda-099ebe80d246" ];
+  #boot.resumeDevice = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246";
   #systemd.services."systemd-hibernate-resume".enable = true;  # not sure
 
   #Hostname & networking
@@ -65,7 +66,7 @@
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
 
-  # Configure keymap in X11
+  # Configure keymap
   services.xserver.xkb = {
     layout = "us";
     variant = "colemak";
@@ -126,6 +127,7 @@
   git
   google-cloud-sdk-gce
   kubectl
+  jdk
   minikube
   nix-prefetch-git
   neovim

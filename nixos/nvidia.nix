@@ -16,6 +16,8 @@
     modesetting.enable = true;
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+  
+    # PRIME Offload - Intel for built-in display, NVIDIA on demand?
   };
   
 }
