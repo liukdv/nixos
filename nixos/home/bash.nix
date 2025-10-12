@@ -21,9 +21,9 @@
       s = "sudo";  # Because typing sudo gets old fast
       
       # Power managment
-      shutdown="sudo shutdown -h now";
+      shutdown="systemctl poweroff";
       hibernate="systemctl hibernate";
-      restart="sudo reboot";
+      restart="systemctl reboot";
       lock="xdg-screensaver lock";
 
       # Text editor
@@ -54,8 +54,8 @@
       # ignorespace: don't save commands starting with space (for sensitive commands)
       # ignoredups: don't save duplicate consecutive commands
       
-      HISTSIZE="100";        # Keep 100 commands in memory during session
-      HISTFILESIZE="5000";    # Keep 5000 commands in ~/.bash_history file
+      HISTSIZE="5000";        # Keep 5000 commands in memory during session
+      HISTFILESIZE="500000";    # Keep 500000 commands in ~/.bash_history file
       
      
       
