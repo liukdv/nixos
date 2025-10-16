@@ -133,6 +133,7 @@
   neovim
   ollama
   podman
+  podman-compose
   postman
   python311
   rustc

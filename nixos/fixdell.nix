@@ -39,4 +39,35 @@
     HibernateMode=shutdown
     FreezerTimeout=3min
   '';
+
+  # Pause GNOME Shell before hibernate
+systemd.services.suspend-gnome-shell = {
+  description = "Suspend gnome-shell before hibernate";
+  before = [ "hibernate.target" "nvidia-hibernate.service" ];
+  wantedBy = [ "hibernate.target" ];
+  partOf  = [ "hibernate.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = [
+      "-${pkgs.procps}/bin/pkill -STOP -x gnome-shell"
+      "-${pkgs.procps}/bin/pkill -STOP -x .gnome-shell-wr"
+    ];
+  };
+};
+
+# Resume GNOME Shell after hibernate
+systemd.services.resume-gnome-shell = {
+  description = "Resume gnome-shell after hibernate";
+  after    = [ "hibernate.target" "nvidia-resume.service" "graphical.target" ];
+  wantedBy = [ "hibernate.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = "${pkgs.coreutils}/bin/sleep 1";
+    ExecStartPost = [
+      "-${pkgs.procps}/bin/pkill -CONT -x gnome-shell"
+      "-${pkgs.procps}/bin/pkill -CONT -x .gnome-shell-wr"
+    ];
+  };
+};
+
 }
