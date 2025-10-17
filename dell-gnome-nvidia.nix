@@ -73,7 +73,7 @@ in
     ${pkgs.kmod}/bin/modprobe spd5118 || true
     ${pkgs.coreutils}/bin/sleep 0.5
     ${pkgs.kmod}/bin/modprobe -r i2c_hid_acpi i2c_hid || true
-    ${pkgs.kmod}/bin/modprobe i2c_hid_acpi i2c_hid || true
+    ${pkgs.kmod}/bin/modprobe -a i2c_hid_acpi i2c_hid || true
   '';
   # ------------------------------------------------------------------------
 
