@@ -31,14 +31,14 @@
     # Ensure logind handles lid even if GNOME takes an inhibitor - not sure if works on Gnome
     extraConfig = ''
       LidSwitchIgnoreInhibited=yes
+      HoldoffTimeoutSec=180s
     '';
   };
 
   # More aggressive hibernate
   systemd.sleep.extraConfig = ''
     HibernateMode=shutdown
-    FreezerTimeout=3min
-  '';
+    '';
 
   # Pause GNOME Shell before hibernate
 systemd.services.suspend-gnome-shell = {
