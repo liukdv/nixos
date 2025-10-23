@@ -22,8 +22,13 @@
       
       # Power managment
       shutdown="systemctl poweroff";
-      hibernate="systemctl hibernate";
+      #hibernate="systemctl hibernate";
       restart="systemctl reboot";
+      shutdowni="systemctl poweroff -i";
+      #hibernatei="systemctl hibernate -i";
+      restarti="systemctl reboot -i";
+
+
       lock="xdg-screensaver lock";
 
       # Text editor
