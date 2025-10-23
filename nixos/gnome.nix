@@ -12,7 +12,8 @@
      gnomeExtensions.vertical-workspaces
      gnomeExtensions.custom-hot-corners-extended
      gnomeExtensions.clipboard-indicator
-     gnomeExtensions.gtile
+     #gnomeExtensions.gtile
+     gnomeExtensions.tiling-shell
      gnomeExtensions.hibernate-status-button
      gnomeExtensions.dash2dock-lite
      gnomeExtensions.media-controls

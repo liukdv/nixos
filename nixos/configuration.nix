@@ -5,12 +5,13 @@
     [ 
       ./hardware-configuration.nix
       ./gnome.nix
-      ./nvidia.nix
       ./keyd.nix
-      ./fixdell.nix
       ./home/bash.nix
       ./home/git.nix
       ./docker.nix
+      ./inspiron-gnome-nvidia.nix
+      #./fixdell.nix
+      #./nvidia.nix
     ];
 
   # enable firmware updates 
@@ -42,7 +43,8 @@
   # Logitech mouse
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
-  
+  # Enable ratbagd service for Piper
+  services.ratbagd.enable = true;  
 
   # Set your time zone / Locale
   time.timeZone = "Europe/Rome";
@@ -58,9 +60,12 @@
     LC_TELEPHONE = "it_IT.UTF-8";
     LC_TIME = "it_IT.UTF-8";
   };
+  
+  # Enable wayland
+  services.xserver.displayManager.gdm.wayland = true;
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment -> done in imported file!
   #services.xserver.displayManager.gdm.enable = true;
@@ -115,9 +120,11 @@
   gparted
   keyd
   libnotify
+  piper
   qmk
-  logitech-udev-rules
+  solaar
   unetbootin
+  wev
   wget
 
   # Development tools
@@ -141,6 +148,7 @@
   uv
   vim
   vscode
+  wl-clipboard
 
   # Media & productivity
   audacity
