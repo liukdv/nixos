@@ -37,6 +37,7 @@
       # Text editor
       text="gnome-text-editor";
       stext="sudo gnome-text-editor";
+      snvim="sudo -E nvim";
 
       # Network utility - get your public IP address
       publicip = "dig +short myip.opendns.com @resolver1.opendns.com";
