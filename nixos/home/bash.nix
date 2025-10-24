@@ -17,6 +17,9 @@
       c = "cd";              # Shorter cd command
       cn = "cd /etc/nixos/"; # Quick jump to NixOS configuration directory
       
+      # Clear shortcut
+      cl = "clear";
+
       # Sudo shortcut
       s = "sudo";  # Because typing sudo gets old fast
       
