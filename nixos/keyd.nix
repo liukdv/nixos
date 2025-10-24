@@ -24,6 +24,10 @@
         s = "leftcontrol"; # Colemak 'r'
         d = "leftshift";   # Colemak 's'
 	f = "leftmeta";    # Colemak 't'
+	t = "enter";	   # Colemak 'g' 
+	g = "tab";	   # Colemak 'd'
+	b = "backspace";   # Colemak 'b'
+
 
 	q = "escape";      # Colemak 'q'
         e = "back";        # Colemak 'f'
