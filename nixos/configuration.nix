@@ -202,6 +202,13 @@
     dedicatedServer.openFirewall = true;
   };
 
+  # Java
+  programs.java = {
+    enable = true;
+    # Puoi specificare la versione del pacchetto da usare per JAVA_HOME (opzionale)
+    # package = pkgs.jdk; 
+  };
+
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
