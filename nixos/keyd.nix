@@ -11,6 +11,12 @@
     settings = {
       main = {
         capslock = "layer(extend)";
+
+	# Both shift keys together toggle Caps Lock
+        leftshift = "leftshift";
+        rightshift = "rightshift";
+        "leftshift+rightshift" = "capslock";
+
       };
       extend = {
         # ---------- Number Row: becomes F1-F12 ----------
