@@ -123,10 +123,12 @@
   piper
   qmk
   solaar
+  traceroute
   unetbootin
   wev
+  whois
   wget
-
+  
   # Development tools
   azure-cli
   cargo
@@ -208,6 +210,17 @@
     # Puoi specificare la versione del pacchetto da usare per JAVA_HOME (opzionale)
     # package = pkgs.jdk; 
   };
+  
+  # Enable Nix-LD to run unpatched dynamic binaries (Fixes Gemini/VS Code extensions)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib  # libstdc++
+    zlib
+    openssl
+    glib
+    curl
+    icu
+    ];
 
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
