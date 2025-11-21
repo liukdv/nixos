@@ -26,6 +26,9 @@
   #boot.resumeDevice = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246";
   #systemd.services."systemd-hibernate-resume".enable = true;  # not sure
 
+  #Enable GNOME Keyring
+  services.gnome.gnome-keyring.enable = true;
+
   #Hostname & networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;

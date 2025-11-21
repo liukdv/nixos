@@ -2,7 +2,7 @@
 
 let
   # GPU mode: "prime-sync" (recommended), "hybrid-offload", or "dgpu-only"
-  gpuMode = "pryme-sync";
+  gpuMode = "prime-sync";
 in
 {
   # ============================================================================
@@ -28,7 +28,7 @@ in
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;  # Use open-source kernel modules
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
 
