@@ -26,6 +26,9 @@
   #boot.resumeDevice = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246";
   #systemd.services."systemd-hibernate-resume".enable = true;  # not sure
 
+  #Enable GNOME Keyring
+  services.gnome.gnome-keyring.enable = true;
+
   #Hostname & networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -152,6 +155,10 @@
   vscode
   wl-clipboard
 
+  # Hacker
+  trufflehog
+  sherlock
+
   # Media & productivity
   audacity
   calibre
@@ -210,6 +217,17 @@
     # Puoi specificare la versione del pacchetto da usare per JAVA_HOME (opzionale)
     # package = pkgs.jdk; 
   };
+  
+  # Enable Nix-LD to run unpatched dynamic binaries (Fixes Gemini/VS Code extensions)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib  # libstdc++
+    zlib
+    openssl
+    glib
+    curl
+    icu
+    ];
 
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
