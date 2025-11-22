@@ -155,6 +155,10 @@
   vscode
   wl-clipboard
 
+  # Hacker
+  trufflehog
+  sherlock
+
   # Media & productivity
   audacity
   calibre
