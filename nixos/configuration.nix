@@ -161,6 +161,7 @@
 
   # Media & productivity
   audacity
+  audio-recorder
   calibre
   handbrake
   libreoffice
