@@ -30,7 +30,7 @@
   services.gnome.gnome-keyring.enable = true;
 
   #Hostname & networking
-  networking.hostName = "nixos";
+  networking.hostName = "liukdv-dellG-nixos";
   networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
