@@ -168,6 +168,7 @@
   mpv
   obs-studio
   obsidian
+  shotcut
   speedcrunch
   vlc
   xournalpp
