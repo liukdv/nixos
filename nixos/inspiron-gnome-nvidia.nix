@@ -22,13 +22,30 @@ in
   # ============================================================================
   # NVIDIA GRAPHICS CONFIGURATION
   # ============================================================================
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+   enable = true;
+   enable32Bit = true;
+   # Enable VA-API for hardware video decoding
+   extraPackages = with pkgs; [
+     nvidia-vaapi-driver  # For NVIDIA video decode
+     intel-media-driver
+     libvdpau-va-gl
+     ];
+  };
+
   services.xserver.videoDrivers = [ "nvidia" ];
+  
+  # Make sure hardware acceleration works
+  #environment.sessionVariables = {
+  # LIBVA_DRIVER_NAME = "nvidia";  # NVIDIA for video decode
+  # NVD_BACKEND = "direct";
+  #};
+
 
   hardware.nvidia = {
     modesetting.enable = true;
-    open = true;  # Use open-source kernel modules
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    open = true;  # Use open-source kernel modules - never use false, they're old
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
 
@@ -47,34 +64,34 @@ in
     );
   };
 
+
   # ============================================================================
   # POWER MANAGEMENT & LOGIND
   # ============================================================================
   services.logind = {
-    # Lid close behavior (just lock the screen, no sleep/suspend/hibernate)
-    lidSwitch = "lock";
-    lidSwitchDocked = "lock";
-    lidSwitchExternalPower = "lock";
-    
-    extraConfig = ''
-      LidSwitchIgnoreInhibited=yes
-      HoldoffTimeoutSec=30s
-      
-      # Idle behavior (managed by GNOME)
-      IdleAction=ignore
-      
-      # Power button behavior
-      HandlePowerKey=poweroff
-      
-      # Disable all suspend/hibernate triggers
-      HandleSuspendKey=ignore
-      HandleSuspendKeyLongPress=ignore
-      HandleHibernateKey=ignore
-      HandleHibernateKeyLongPress=ignore
-    '';
+    settings.Login = {
+      # lid 
+      HandleLidSwitch = "lock";
+      HandleLidSwitchDocked = "lock";
+      HandleLidSwitchExternalPower = "lock";
+      LidSwitchIgnoreInhibited = "yes";
+
+      HoldoffTimeoutSec = "30s";
+      IdleAction = "ignore";
+
+      # disable hibernation and suspend 
+      HandlePowerKey = "poweroff";
+      HandleSuspendKey = "ignore";
+      HandleSuspendKeyLongPress = "ignore";
+      HandleHibernateKey = "ignore";
+      HandleHibernateKeyLongPress = "ignore";
+    };
   };
 
-  # Disable suspend and hibernate completely at systemd level
+  # ============================================================================
+  # SYSTEMD SLEEP
+  # ============================================================================
+  # 
   systemd.sleep.extraConfig = ''
     AllowSuspend=no
     AllowHibernation=no
@@ -82,14 +99,17 @@ in
     AllowHybridSleep=no
   '';
 
-# UPower configuration for battery management
+  # ============================================================================
+  # UPOWER
+  # ============================================================================
   services.upower = {
     enable = true;
-    percentageLow = 17;              # Low battery warning at x%
-    percentageCritical = 7;          # Critical at x%
-    percentageAction = 3;            # Emergency action at x%
-    criticalPowerAction = "PowerOff"; # Shutdown instead of HybridSleep
-};
+    percentageLow = 17;
+    percentageCritical = 7;
+    percentageAction = 3;
+    criticalPowerAction = "PowerOff";
+  };
+
 
   # ============================================================================
   # AUTOMATIC IDLE SHUTDOWN

@@ -31,7 +31,6 @@
       #hibernatei="systemctl hibernate -i";
       restarti="systemctl reboot -i";
 
-
       lock="xdg-screensaver lock";
 
       # Text editor

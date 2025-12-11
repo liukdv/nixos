@@ -12,6 +12,7 @@
       ./inspiron-gnome-nvidia.nix
       #./fixdell.nix
       #./nvidia.nix
+      ./geforcenow.nix
     ];
 
   # enable firmware updates 
@@ -32,8 +33,10 @@
   #Hostname & networking
   networking.hostName = "liukdv-dellG-nixos";
   networking.networkmanager.enable = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  
+  # Enables wireless support via wpa_supplicant.
+  # networking.wireless.enable = true; 
+  
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -65,14 +68,14 @@
   };
   
   # Enable wayland
-  services.xserver.displayManager.gdm.wayland = true;
+  services.displayManager.gdm.wayland = true;
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment -> done in imported file!
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
+  #services.displayManager.gdm.enable = true;
+  #services.desktopManager.gnome.enable = true;
 
   # Configure keymap
   services.xserver.xkb = {
@@ -118,11 +121,13 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   # System utilities
+  appimage-run
   bind
   efibootmgr
   gparted
   keyd
   libnotify
+  libva-utils
   piper
   qmk
   solaar
@@ -175,6 +180,8 @@
 
   # Internet & communication
   amule
+  brave
+  chromium
   discord
   firefox
   google-chrome
@@ -183,7 +190,9 @@
   telegram-desktop
 
   # Gaming
+  #gfn-electron
   steam
+  steam-run
 
   # Virtualization
   virtualbox
@@ -212,6 +221,10 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
+
+  # Disable ipv6 temporally for gaming
+  #networking.enableIPv6 = false;
+
 
   # Java
   programs.java = {
