@@ -70,9 +70,6 @@
   # Enable wayland
   services.displayManager.gdm.wayland = true;
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
   # Enable the GNOME Desktop Environment -> done in imported file!
   #services.displayManager.gdm.enable = true;
   #services.desktopManager.gnome.enable = true;
@@ -233,18 +230,21 @@
     # package = pkgs.jdk; 
   };
   
-  # Enable Nix-LD to run unpatched dynamic binaries (Fixes Gemini/VS Code extensions)
-  programs.nix-ld.enable = true;
+  # Run unpatched dynamic binaries
   programs.nix-ld.libraries = with pkgs; [
+    # Gemini/VS Code extensions)
     stdenv.cc.cc.lib  # libstdc++
     zlib
     openssl
     glib
     curl
     icu
+
+
     ];
 
-  # Enable flakes
+  # Enable flakes and ld
+  programs.nix-ld.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   # Open ports in the firewall.
