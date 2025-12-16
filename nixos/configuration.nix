@@ -4,13 +4,13 @@
   imports =
     [ 
       ./hardware-configuration.nix
-      ./gnome.nix
+      #./gnome.nix
+      ./plasma.nix
       ./keyd.nix
       ./home/bash.nix
       ./home/git.nix
       ./docker.nix
-      ./inspiron-gnome-nvidia.nix
-      #./fixdell.nix
+      ./inspiron-nvidia.nix
       #./nvidia.nix
       ./geforcenow.nix
     ];
@@ -67,12 +67,7 @@
     LC_TIME = "it_IT.UTF-8";
   };
   
-  # Enable wayland
-  services.displayManager.gdm.wayland = true;
-
-  # Enable the GNOME Desktop Environment -> done in imported file!
-  #services.displayManager.gdm.enable = true;
-  #services.desktopManager.gnome.enable = true;
+  # Enable GNOME/PLASMA DE -> done in imported file!
 
   # Configure keymap
   services.xserver.xkb = {
@@ -114,8 +109,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile
+  # To search$: nix search wget
   environment.systemPackages = with pkgs; [
   # System utilities
   appimage-run
@@ -207,8 +202,6 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   
@@ -239,8 +232,6 @@
     glib
     curl
     icu
-
-
     ];
 
   # Enable flakes and ld
@@ -248,18 +239,12 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  #networking.firewall.allowedTCPPorts = [ ... ];
+  #networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  #networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  # This value determines the NixOS release from which the default settings for stateful data, like file locations and database versions on your system were taken. Recommended to leave this value at the first install of this system.
   system.stateVersion = "25.05"; 
-
 }
 
