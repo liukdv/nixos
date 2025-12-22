@@ -18,9 +18,32 @@
   # enable firmware updates 
   services.fwupd.enable = true; # sudo fwupdmgr refresh | sudo fwupdmgr get-updates | sudo fwupdmgr update
   
-  # Bootloader - systemd
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true; 
+  # Bootloader
+  # systemd
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true; 
+  
+  # grub 
+  boot.loader = {
+    grub = { 
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = true; # to see Windows in grub 
+      efiInstallAsRemovable = true; # Dell needed setting (?)
+    };
+    efi = {
+      canTouchEfiVariables = false;
+      efiSysMountPoint = "/boot/efi";
+    };
+  }; 
+ 
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/4A8B-84AD";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+ 
   # Enable swap and hibernation
   swapDevices = [{ device = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246"; }];
   boot.kernelParams = [ "resume=UUID=baad3773-1ae7-48f0-9cda-099ebe80d246" ];
@@ -124,6 +147,7 @@
   qmk
   solaar
   traceroute
+  tree
   unetbootin
   wev
   whois
