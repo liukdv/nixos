@@ -205,10 +205,10 @@
   spotify
   telegram-desktop
 
-  # Gaming
+  # Gaming - steam enabled with dedicated part
   #gfn-electron
-  steam
-  steam-run
+  #steam
+  #steam-run
 
   # Virtualization
   virtualbox

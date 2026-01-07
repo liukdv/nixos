@@ -21,14 +21,14 @@
       extend = {
         # ---------- Number Row: becomes F1-F12 ----------
         "1" = "f1"; "2" = "f2"; "3" = "f3"; "4" = "f4"; "5" = "f5"; "6" = "f6"; "7" = "f7"; "8" = "f8"; "9" = "f9"; "0" = "f10";
-        minus = "f11";
-        equal = "f12";
+	equal = "f11";
+        escape = "f12";
 
-		# ---------- Media & system ----------
-        f1 = "playpause"; f2 = "prev"; f3 = "next"; f4 = "stop";
-        f5 = "mute"; f6 = "volumedown"; f7 = "volumeup";
-        f8 = "brightnessdown"; f9 = "brightnessup";
-        f11 = "www"; f12 = "mail";
+	# ---------- Media & system ----------
+        #f1 = "playpause"; f2 = "prev"; f3 = "next"; f4 = "stop";
+        #f5 = "mute"; f6 = "volumedown"; f7 = "volumeup";
+        #f8 = "brightnessdown"; f9 = "brightnessup";
+        #f11 = "www"; f12 = "mail";
 
         # ---------- LEFT Colemak-intended combos (translated to QWERTY keys) ----------
         q = "escape";      
