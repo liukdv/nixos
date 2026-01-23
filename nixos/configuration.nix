@@ -50,20 +50,19 @@
   #boot.resumeDevice = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246";
   #systemd.services."systemd-hibernate-resume".enable = true;  # not sure
 
-  #Enable GNOME Keyring
+  # Enable GNOME Keyring
   services.gnome.gnome-keyring.enable = true;
 
-  #Hostname & networking
+  # Hostname & networking
   networking.hostName = "liukdv-dellG-nixos";
   networking.networkmanager.enable = true;
   
   # Enables wireless support via wpa_supplicant.
-  # networking.wireless.enable = true; 
+  # networking.wireless.enable = true;
   
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
 
   # Bluetooth
   services.blueman.enable = true;        # optional, GUI manager
