@@ -34,8 +34,8 @@
       lock="xdg-screensaver lock";
 
       # Text editor
-      text="gnome-text-editor";
-      stext="sudo gnome-text-editor";
+      text="kwrite";
+      stext="sudo kwrite";
       snvim="sudo -E nvim";
 
       # Network utility - get your public IP address

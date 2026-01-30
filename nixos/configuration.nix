@@ -89,7 +89,7 @@
     LC_TIME = "it_IT.UTF-8";
   };
   
-  # Enable GNOME/PLASMA DE -> done in imported file!
+  # Enable DE -> done in imported file!
 
   # Configure keymap
   services.xserver.xkb = {
@@ -155,9 +155,11 @@
   # Development tools
   azure-cli
   cargo
+  dbeaver-bin
   #docker
   git
   google-cloud-sdk-gce
+  kiro
   kubectl
   jdk
   minikube
@@ -215,29 +217,13 @@
   # Work
   teams-for-linux
   ];
-  
-     
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-  
+    
   # Steam
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
-
-  # Disable ipv6 temporally for gaming
-  #networking.enableIPv6 = false;
-
 
   # Java
   programs.java = {
@@ -257,15 +243,30 @@
     icu
     ];
 
-  # Enable flakes and ld
-  programs.nix-ld.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+
+  # Disable ipv6 temporally for gaming
+  #networking.enableIPv6 = false;
   
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ... ];
   #networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   #networking.firewall.enable = false;
+
+  # Enable flakes and ld
+  programs.nix-ld.enable = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default settings for stateful data, like file locations and database versions on your system were taken. Recommended to leave this value at the first install of this system.
   system.stateVersion = "25.05"; 
