@@ -45,7 +45,7 @@
       # System maintenance commands
       sysupdate = "sudo nixos-rebuild switch --upgrade && sudo nix-collect-garbage";
       # Rebuild NixOS system and clean up unreferenced packgs to save disk space
-      sysupdatewipe = "sudo nixos-rebuild switch --upgrade && sudo nix-collect-garbage -d && sudo nixos-rebuild boot";       
+      sysupdatewipe = "sudo nixos-rebuild switch --upgrade && sudo nix-collect-garbage -d && systemctl reboot";       
       # Same but wipes old NixOS generations
       
       # Desktop notification for long-running commands
