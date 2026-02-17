@@ -132,7 +132,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile
-  # To search$: nix search wget
+  # To search: nix search wget
   environment.systemPackages = with pkgs; [
   # System utilities
   appimage-run
@@ -156,6 +156,7 @@
   azure-cli
   cargo
   dbeaver-bin
+  distrobox
   #docker
   git
   google-cloud-sdk-gce
@@ -165,6 +166,7 @@
   minikube
   nix-prefetch-git
   neovim
+  nodejs
   ollama
   podman
   podman-compose
@@ -241,6 +243,7 @@
     glib
     curl
     icu
+    libsecret
     ];
 
 
@@ -264,9 +267,16 @@
   # Or disable the firewall altogether.
   #networking.firewall.enable = false;
 
+  # Enable nix-locate; this provides the 'nix-locate' command and a database of all packages.
+  programs.nix-index.enable = true;
+
   # Enable flakes and ld
   programs.nix-ld.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+
+  # Keep a copy of this configuration file in the system build
+  system.copySystemConfiguration = true;
 
   # This value determines the NixOS release from which the default settings for stateful data, like file locations and database versions on your system were taken. Recommended to leave this value at the first install of this system.
   system.stateVersion = "25.05"; 
