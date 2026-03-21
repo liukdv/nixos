@@ -48,6 +48,9 @@
       sysupdatewipe = "sudo nixos-rebuild switch --upgrade && sudo nix-collect-garbage -d && systemctl reboot";       
       # Same but wipes old NixOS generations
       
+      # TTS 
+      say = "spd-say";
+
       # Desktop notification for long-running commands
       alert = "notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\" \"$(history|tail -n1|sed -e 's/^[[:space:]]*[0-9]\\+[[:space:]]*//;s/[;&|]\\s*alert$//')\"";
       # Usage: long-command; alert
