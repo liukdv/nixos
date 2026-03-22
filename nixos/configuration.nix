@@ -158,6 +158,7 @@
   dbeaver-bin
   distrobox
   #docker
+  emacs
   git
   google-cloud-sdk-gce
   kiro
@@ -215,6 +216,9 @@
 
   # Virtualization
   virtualbox
+
+  #Test 
+  #sl
 
   # Work
   teams-for-linux
