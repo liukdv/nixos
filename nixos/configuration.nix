@@ -99,6 +99,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = [ pkgs.brlaser ];
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -132,12 +133,13 @@
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile
-  # To search: nix search wget
+  # To search: nix search nixpkgs wget || nix-locate bin/wget
   environment.systemPackages = with pkgs; [
   # System utilities
   appimage-run
   bind
   efibootmgr
+  file
   gparted
   keyd
   libnotify
@@ -159,6 +161,7 @@
   distrobox
   #docker
   emacs
+  gh
   git
   google-cloud-sdk-gce
   kiro
