@@ -51,6 +51,9 @@
       # TTS 
       say = "spd-say";
 
+      # Python from distrobox
+      distropy = "/home/liukdv/.local/bin/python3";
+
       # Desktop notification for long-running commands
       alert = "notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\" \"$(history|tail -n1|sed -e 's/^[[:space:]]*[0-9]\\+[[:space:]]*//;s/[;&|]\\s*alert$//')\"";
       # Usage: long-command; alert
