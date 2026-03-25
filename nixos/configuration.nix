@@ -97,9 +97,14 @@
     variant = "colemak";
   };
 
-  # Enable CUPS to print documents.
+  # Enable CUPS to print 
   services.printing.enable = true;
+  # Add Brother printer drivers
   services.printing.drivers = [ pkgs.brlaser ];
+
+  # SANE to scan documents
+  # hardware.sane.enable = true;
+  # hardware.sane.brscan4.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -172,8 +177,8 @@
   neovim
   nodejs
   ollama
-  podman
-  podman-compose
+  #podman
+  #podman-compose
   postman
   python311
   rustc
@@ -186,6 +191,7 @@
   # Hacker
   trufflehog
   sherlock
+  angryipscanner
 
   # Media & productivity
   audacity

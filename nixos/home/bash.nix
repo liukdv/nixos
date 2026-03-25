@@ -43,10 +43,9 @@
       # Uses DNS query to OpenDNS to get external IP (faster than curl to web services)
       
       # System maintenance commands
-      sysupdate = "sudo nixos-rebuild switch --upgrade && sudo nix-collect-garbage";
+      sysupdate = "sudo nix-collect-garbage && sudo nixos-rebuild switch --upgrade";
       # Rebuild NixOS system and clean up unreferenced packgs to save disk space
-      sysupdatewipe = "sudo nixos-rebuild switch --upgrade && sudo nix-collect-garbage -d && systemctl reboot";       
-      # Same but wipes old NixOS generations
+      sysupdatewipe = "sudo nix-collect-garbage -d && sudo nixos-rebuild switch --upgrade && systemctl reboot"; 
       
       # TTS 
       say = "spd-say";
