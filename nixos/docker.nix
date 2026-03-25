@@ -24,4 +24,10 @@
       ];
     };
   };
+
+  # Podman related packages
+  environment.systemPackages = with pkgs; [
+    podman-compose
+  ];
+
 }
