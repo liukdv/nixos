@@ -15,9 +15,18 @@
   
   # additional KDE packages
   environment.systemPackages = with pkgs; [
+    kdePackages.filelight
+    kdePackages.kamoso
+    kdePackages.kompare
+    kdePackages.kolourpaint
+    krita
     seahorse 
+    #touchegg
   ];
   
+  # enable touchegg, for gestures
+  #services.touchegg.enable = true; 
+
   # removes preinstalled KDE packages
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     elisa
