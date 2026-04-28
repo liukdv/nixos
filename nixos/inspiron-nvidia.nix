@@ -5,6 +5,12 @@ let
   gpuMode = "hybrid-offload";
 in
 {
+  # remove flood 
+  # GL_INVALID_ENUM error generated. Invalid <face>.
+  # Invalid framebuffer status:  "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"
+  environment.sessionVariables = {
+  QT_LOGGING_RULES = "kwin_scene_opengl=false";
+  };
   # ============================================================================
   # KERNEL PARAMETERS & BOOT - SUSPEND/RESUME FIXES
   # ============================================================================

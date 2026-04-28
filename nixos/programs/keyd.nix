@@ -2,74 +2,73 @@
 { config, pkgs, ... }:
 
 {
+  #users.groups.keyd = {};
 
-  # key mapping
   services.keyd = {
-   enable = true;
-   keyboards.default = {
-    ids = [ "*" ];
-    settings = {
-      main = {
-        capslock = "layer(extend)";
+    enable = true;
 
-        # Both shift keys together toggle Caps Lock
-        leftshift = "leftshift";
-        rightshift = "rightshift";
-        "leftshift+rightshift" = "capslock";
+    keyboards.default = {
+      ids = [ "*" ];
 
+      settings = {
+        main = {
+          capslock = "layer(extend)";
+
+          # Both shift keys together toggle Caps Lock
+          leftshift = "leftshift";
+          rightshift = "rightshift";
+          "leftshift+rightshift" = "capslock";
         };
-      extend = {
-        # ---------- Number Row: becomes F1-F12 ----------
-        "1" = "f1"; "2" = "f2"; "3" = "f3"; "4" = "f4"; "5" = "f5"; "6" = "f6"; "7" = "f7"; "8" = "f8"; "9" = "f9"; "0" = "f10";
-        equal = "f11";
-        escape = "f12";
 
-        # ---------- Media & system ----------
-        #f1 = "playpause"; f2 = "prev"; f3 = "next"; f4 = "stop";
-        #f5 = "mute"; f6 = "volumedown"; f7 = "volumeup";
-        #f8 = "brightnessdown"; f9 = "brightnessup";
-        #f11 = "www"; f12 = "mail";
+        extend = {
+          # ---------- Number Row: becomes F1-F12 ----------
+          "1" = "f1";
+          "2" = "f2";
+          "3" = "f3";
+          "4" = "f4";
+          "5" = "f5";
+          "6" = "f6";
+          "7" = "f7";
+          "8" = "f8";
+          "9" = "f9";
+          "0" = "f10";
+          equal = "f11";
+          escape = "f12";
 
-        # ---------- LEFT Colemak-intended combos (translated to QWERTY keys) ----------
-        q = "escape";      
-        w = "C-S-z";       
-        e = "back";		# Colemak 'f'
-        r = "forward";		# Colemak 'p'
-        t = "S-tab"; 		# Colemak 'g' 
-        
-        a = "leftalt";		
-        s = "leftcontrol";	# Colemak 'r'
-        d = "leftshift"; 	# Colemak 's'
-        f = "leftmeta";		# Colemak 't'
-        g = "tab";		# Colemak 'd'
+          # ---------- LEFT Colemak-intended combos (translated to QWERTY keys) ----------
+          q = "escape";
+          w = "C-S-z";
+          e = "back";       # Colemak 'f'
+          r = "forward";    # Colemak 'p'
+          t = "S-tab";      # Colemak 'g'
 
-        z = "C-z";
-        x = "C-x";
-        c = "C-c";
-        v = "C-v";
-        b = "enter";
-    
-        # ---------- RIGHT Colemak-intended combos
-        # Navigation & editing (kept where non-conflicting) 
-        i = "up"; k = "down"; j = "left"; l = "right";
-        y = "pageup"; h = "pagedown"; u = "home"; o = "end";
-        # s = "down";   w = "up"                                   # mouse down/up?
+          a = "layer(alt)";
+          s = "layer(control)"; # Colemak 'r'
+          d = "layer(shift)";   # Colemak 's'
+          f = "layer(meta)";    # Colemak 't'
+          g = "tab";            # Colemak 'd'
 
-        # Text editing
-        semicolon = "backspace"; 
-        p = "delete";
-        # space = "backspace";
-        
-        # Browser / tab management
-        # m = "refresh"; comma = "C-S-tab"; dot = "C-tab";
-        
-        # Special keys
-        # pause = "mycomputer"; printscreen = "calculator";
-        # enter = "printscreen"; leftbrace = "mycomputer";
-        # apostrophe = "menu"; slash = "compose";
+          z = "C-z";
+          x = "C-x";
+          c = "C-c";
+          v = "C-v";
+          b = "enter";
+
+          # ---------- RIGHT Colemak-intended combos ----------
+          i = "up";
+          k = "down";
+          j = "left";
+          l = "right";
+          y = "pageup";
+          h = "pagedown";
+          u = "home";
+          o = "end";
+
+          # Text editing
+          semicolon = "backspace";
+          p = "delete";
+        };
       };
     };
-   };
   };
-
 }

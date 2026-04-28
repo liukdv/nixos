@@ -152,6 +152,7 @@
   keyd
   libnotify
   libva-utils
+  mesa-demos
   pciutils
   piper
   qmk

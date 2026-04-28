@@ -58,7 +58,20 @@
       # Usage: long-command; alert
       # Shows desktop notification with success/failure icon and the command that just ran
     };
+
+    # Bash-only interactive configuration.
+    interactiveShellInit = ''
+      # ===== SHELL BEHAVIOR OPTIONS =====
+      shopt -s histappend    # Append to history file instead of overwriting it
+      shopt -s checkwinsize  # Update LINES and COLUMNS variables after each command
+      shopt -s globstar      # Enable ** recursive globbing
+
+      # ===== CUSTOM COLORED PROMPT =====
+      # Format: username@hostname:/current/path$
+      PS1='[\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ ]'
+    '';
    };
+
      environment.sessionVariables = {    
       # ===== HISTORY CONFIGURATION =====
       # Control what gets saved to history
@@ -72,21 +85,7 @@
       
      
       
-      # ===== CUSTOM COLORED PROMPT =====
-      # Format: username@hostname:/current/path$ 
-      # Colors: green for user@host, blue for path, reset to normal for $
-      PS1="[\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ ]";
-      # \[\033[01;32m\] = bright green
-      # \u = username
-      # @ = literal @
-      # \h = hostname
-      # \[\033[00m\] = reset color
-      # : = literal colon
-      # \[\033[01;34m\] = bright blue  
-      # \w = current working directory
-      # \$ = $ for regular user, # for root
-      
-      # ===== COMPILER OUTPUT COLORS =====
+            # ===== COMPILER OUTPUT COLORS =====
       # Make GCC/G++ error messages colorized for easier reading
       GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
       # error=01;31    = bright red for errors
@@ -96,21 +95,6 @@
       # locus=01       = bright white for file:line:column locations
       # quote=01       = bright white for quoted code sections
     };  
-    # Shell initialization commands
-    environment.shellInit = ''
-      # Additional bash configuration that goes into /etc/bashrc
-      
-       # ===== SHELL BEHAVIOR OPTIONS =====
-      shopt -s histappend    # Append to history file instead of overwriting it
-                            # Prevents losing history when multiple terminals are open
-
-      shopt -s checkwinsize  # Update LINES and COLUMNS variables after each command
-                            # Fixes display issues when terminal is resized
-
-      shopt -s globstar     # Enable ** recursive globbing (bash 4.0+)
-                           # Allows: ls **/*.txt (find all .txt files recursively)
-      '';
-  
   # ===== SYSTEM-WIDE ENVIRONMENT VARIABLES =====
   # These are available to all programs, not just bash
   environment.variables = {
