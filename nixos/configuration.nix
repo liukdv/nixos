@@ -9,18 +9,17 @@
       ./programs/keyd.nix
       ./programs/bash.nix
       ./programs/git.nix
-      ./programs/docker.nix
+      ./programs/podman.nix
     ];
 
   # enable firmware updates 
   services.fwupd.enable = true; # sudo fwupdmgr refresh | sudo fwupdmgr get-updates | sudo fwupdmgr update
   
-  # Bootloader
-  # systemd
+  # Bootloader - Systemd
   #boot.loader.systemd-boot.enable = true;
   #boot.loader.efi.canTouchEfiVariables = true; 
   
-  # grub 
+  # Grub 
   boot.loader = {
     grub = { 
       enable = true;
@@ -34,42 +33,40 @@
       efiSysMountPoint = "/boot/efi";
     };
   }; 
- 
+  boot.loader.grub.configurationLimit = 5;
+
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/4A8B-84AD";
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };
  
-  # Enable swap and hibernation
+  # Swap and hibernation
   swapDevices = [{ device = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246"; }];
-  boot.kernelParams = [ "resume=UUID=baad3773-1ae7-48f0-9cda-099ebe80d246" ];
+  #boot.kernelParams = [ "resume=UUID=baad3773-1ae7-48f0-9cda-099ebe80d246" ];
   #boot.resumeDevice = "/dev/disk/by-uuid/baad3773-1ae7-48f0-9cda-099ebe80d246";
   #systemd.services."systemd-hibernate-resume".enable = true;  # not sure
 
-  # Folder /tmp settings
-  boot.tmp = {
-    useTmpfs = false;
-    cleanOnBoot = true;
-  };
-
-  # Enable GNOME Keyring
-  services.gnome.gnome-keyring.enable = true;
+  # Folder /tmp settings - decided to leave default 10d
+  #boot.tmp = {
+    #useTmpfs = false;
+    #cleanOnBoot = true;
+  #};
 
   # Hostname & networking
   networking.hostName = "liukdv-dellG-nixos";
   networking.networkmanager.enable = true;
-  
-  # Enables wireless support via wpa_supplicant.
-  # networking.wireless.enable = true;
-  
+
+  # Disable modem/LTE function
+  networking.modemmanager.enable = false;
+
   # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  #networking.proxy.default = "http://user:password@proxy:port/";
+  #networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Bluetooth
-  services.blueman.enable = true;        # optional, GUI manager
-  hardware.bluetooth.enable = true;      # enables Bluetooth support
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   # Logitech mouse
   hardware.logitech.wireless.enable = true;
@@ -92,22 +89,21 @@
     LC_TIME = "it_IT.UTF-8";
   };
   
-  # Enable DE -> done in imported file!
-
   # Configure keymap
   services.xserver.xkb = {
     layout = "us";
     variant = "colemak";
   };
 
-  # Enable CUPS to print 
+  # Enable CUPS to print and colors
   services.printing.enable = true;
+  services.colord.enable = true;
   # Add Brother printer drivers
   services.printing.drivers = [ pkgs.brlaser ];
 
   # SANE to scan documents
-  # hardware.sane.enable = true;
-  # hardware.sane.brscan4.enable = true;
+  #hardware.sane.enable = true;
+  #hardware.sane.brscan4.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -126,7 +122,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  #services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.liukdv = {
@@ -149,9 +145,10 @@
   efibootmgr
   file
   gparted
-  keyd
+  libcamera
   libnotify
   libva-utils
+  keyd
   mesa-demos
   pciutils
   piper
@@ -186,12 +183,13 @@
   #podman
   #podman-compose
   postman
-  python311
+  python311               # (almost) @deprecated
+  (lib.lowPrio python314) # @update
   rustc
   terraform
   uv
   vim
-  vscode
+  vscode-fhs
   wl-clipboard
 
   # Hacker
@@ -230,9 +228,12 @@
   #steam-run
 
   # Virtualization
-  virtualbox
+  #virtualbox
+  qemu
+  quickemu
+  virt-manager
 
-  #Test 
+  # Test 
   #sl
 
   # Work
@@ -249,33 +250,19 @@
   # Java
   programs.java = {
     enable = true;
-    # Puoi specificare la versione del pacchetto da usare per JAVA_HOME (opzionale)
-    # package = pkgs.jdk; 
+    # specific version if needed
+     #package = pkgs.jdk; 
   };
   
-  # Run unpatched dynamic binaries
-  programs.nix-ld.libraries = with pkgs; [
-    # Gemini/VS Code extensions)
-    stdenv.cc.cc.lib  # libstdc++
-    zlib
-    openssl
-    glib
-    curl
-    icu
-    libsecret
-    ];
-
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # Some programs need SUID wrappers, can be configured further or are started in user sessions.
+  #programs.mtr.enable = true;
+  #programs.gnupg.agent = {
+     #enable = true;
+     #enableSSHSupport = true;
+   #};
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  #services.openssh.enable = true;
 
   # Disable ipv6 temporally for gaming
   #networking.enableIPv6 = false;
@@ -289,7 +276,7 @@
   # Enable nix-locate; this provides the 'nix-locate' command and a database of all packages.
   programs.nix-index.enable = true;
 
-  # Enable flakes and ld
+  # Enable flakes and ld loader for dynamic binaries
   programs.nix-ld.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

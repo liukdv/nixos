@@ -9,8 +9,20 @@
   # enables KDE Plasma 6
   services.desktopManager.plasma6.enable = true;
 
+  # enables kde and gtk with priority
+  xdg.portal = {
+    enable = true;
+
+    extraPortals = with pkgs; [
+      kdePackages.xdg-desktop-portal-kde
+      xdg-desktop-portal-gtk
+    ];
+
+    config.common.default = [ "kde" "gtk" ];
+   };
+
   # enable gnome keyring for old pwds and kwallet for kde stuff
-  security.pam.services.sddm.enableGnomeKeyring = true;
+  #security.pam.services.sddm.enableGnomeKeyring = true;
   security.pam.services.sddm.enableKwallet = true;
   
   # additional KDE packages

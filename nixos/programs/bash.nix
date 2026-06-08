@@ -45,7 +45,7 @@
       # System maintenance commands
       sysupdate = "sudo nix-collect-garbage && sudo nixos-rebuild switch --upgrade";
       # Rebuild NixOS system and clean up unreferenced packgs to save disk space
-      sysupdatewipe = "sudo nix-collect-garbage -d && sudo nixos-rebuild switch --upgrade && systemctl reboot"; 
+      sysupdatewipe = "sudo nix-collect-garbage -d && sudo nixos-rebuild switch --upgrade"; 
       
       # TTS 
       say = "spd-say";

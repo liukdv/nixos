@@ -5,12 +5,27 @@ let
   gpuMode = "hybrid-offload";
 in
 {
-  # remove flood 
-  # GL_INVALID_ENUM error generated. Invalid <face>.
-  # Invalid framebuffer status:  "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"
+  # ============================================================================
+  # JOURNAL LOGS CLEANUP - TEMPORARY
+  # ============================================================================
+
+  # GL_INVALID_ENUM error generated. Invalid <face>. Invalid framebuffer status:  "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"
   environment.sessionVariables = {
-  QT_LOGGING_RULES = "kwin_scene_opengl=false";
+    # Forces SW rendering for cursor - due to nvidia error
+    KWIN_FORCE_SW_CURSOR = "1";
+    # remove flood - JUST SILENCE, NOT FIX! 
+    #QT_LOGGING_RULES = "kwin_scene_opengl=false";
   };
+  
+  # Fix systemd modprobe early call at boot - spam message, may be solved
+  # The unit calls "modprobe" directly; on NixOS modprobe is provided by pkgs.kmod.
+  systemd.services."modprobe@" = {
+    overrideStrategy = "asDropin";
+    serviceConfig.ExecSearchPath = "${pkgs.kmod}/bin";
+  };
+  
+  # also QT and other nvidia should be removed (or fixed) one day
+ 
   # ============================================================================
   # KERNEL PARAMETERS & BOOT - SUSPEND/RESUME FIXES
   # ============================================================================
@@ -20,28 +35,28 @@ in
   #options nvidia_modeset vblank_sem_control=0
   #'';
 
-  # 1. Early KMS: Load Nvidia drivers immediately during boot.
-  # Essential for Wayland stability, early display, and (hopefully) correct resume from suspend.
-  boot.initrd.kernelModules = [ 
-    "i915"
-    "nvidia" 
-    "nvidia_modeset" 
-    "nvidia_uvm" 
-    "nvidia_drm" 
-    ]; 
-
-  # 2. Kernel Parameters: ACPI fixes and Nvidia Power Management.
-  # Necessary for stable sleep/resume cycles and preventing PCIe freezes.
+  # 0. Kernel Parameters: Command-line parameters passed directly to the kernel at boot.
   boot.kernelParams = [
-    "acpi_osi=Linux"      # Tell firmware we're Linux for better ACPI compatibility
+    #"acpi_osi=Linux"     # ACPI (Advanced Configuration & Power Interface): firmware logic (BIOS/UEFI) for HW paths to the OS
     "pcie_aspm=off"       # Disable PCIe power management (helps with stability)
-    "mem_sleep_default=s2idle" # deep not supported
-    
-    "nvidia-drm.modeset=1"   # Nvidia specific parameter for correct resume
+    "mem_sleep_default=s2idle" # Deep sleep not supported
     #"nvidia.NVreg_PreserveVideoMemoryAllocations=1" # Saves VRAM to RAM during suspend
   ];
 
-  # Blacklist problematic modules
+  # 1. Early KMS (Kernel Mode Setting): Modules loaded in the initial RAM disk (initrd)
+  boot.initrd.kernelModules = [ 
+    "i915"
+    ]; 
+  
+  # 2. Modules loaded after initrd, but before userspace
+  #boot.kernelModules = [
+    #"nvidia"
+    #"nvidia_modeset"
+    #"nvidia_uvm"
+    #"nvidia_drm"
+  #];
+
+  # 2. Blacklist problematic modules
   boot.blacklistedKernelModules = [ 
     "spd5118"      # RAM temperature
     "thunderbolt"  # Prevents Thunderbolt issues
@@ -49,7 +64,7 @@ in
   ];
 
   # ============================================================================
-  # NVIDIA GRAPHICS CONFIGURATION
+  # GRAPHICS CONFIGURATION
   # ============================================================================
   hardware.graphics = {
    enable = true;
@@ -74,21 +89,22 @@ in
 
 
   hardware.nvidia = {
-    modesetting.enable = true;
-    open = true;  # Use open Nvidia kernel modules (dont use false, they're old)
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
-    
-    dynamicBoost.enable = true;
+    modesetting.enable = true; # Required for NVIDIA DRM/KMS
+    open = true;  # Use Nvidia open/closed kernel modules (open should be better)
+    package = config.boot.kernelPackages.nvidiaPackages.stable; # stable, beta, production
+    powerManagement.enable = false; # Nvidia power-management, relevant for suspend/resume and GPU state.
+    powerManagement.finegrained = false; # Nvidia power down when unused
+    dynamicBoost.enable = false; # shift power dynamically between CPU and GPU (appereantly not well supported on dell/linux)
+
     # PRIME configuration for hybrid graphics (Intel iGPU + NVIDIA dGPU)
     prime = lib.mkIf (gpuMode != "dgpu-only") (
-      if gpuMode == "hybrid-offload" then {
-        offload.enable = true;
+      if gpuMode == "hybrid-offload" then {  
+	offload.enable = true;
         offload.enableOffloadCmd = true;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
-      } else { # prime-sync mode
+      } 
+      else { # prime-sync mode
         sync.enable = true;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
@@ -144,9 +160,11 @@ in
   services.upower = {
     enable = true;
     percentageLow = 17;
-    percentageCritical = 7;
+    percentageCritical = 10;
     percentageAction = 4;
+    usePercentageForPolicy = true;
     criticalPowerAction = "PowerOff";
+    # Dell Battery Firmware could enable thresholds, change with $: busctl call
   };
 
 }
