@@ -4,7 +4,7 @@
 {
   programs.git = {
     enable = true;
-    
+
     # Git configuration
     config = {
       user = {
@@ -14,11 +14,11 @@
 
       # Ask password once and then store it -> no, better with gh in wallet
       #credential.helper = "store";
-      
+
       # Optional but useful settings
       init.defaultBranch = "main";  # Use 'main' instead of 'master'
       pull.rebase = false;           # Use merge strategy for pulls
-    
+
       # Custom merge driver: always keep "our" version
       merge.ours = {
         driver = true;

@@ -7,6 +7,6 @@
 
   home.packages = [ ];
 
-  # @todo: Add user-level Home Manager configuration here when needed.
+  # Add user-level Home Manager configuration here when needed.
   programs.home-manager.enable = true;
 }

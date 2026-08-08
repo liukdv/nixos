@@ -12,7 +12,7 @@
   # enables kde and gtk with priority
   xdg.portal = {
     enable = true;
-    
+
     # already imported through services.desktopManager.plasma6.enable
     #extraPortals = with pkgs; [
     #  kdePackages.xdg-desktop-portal-kde
@@ -25,7 +25,7 @@
   # enable gnome keyring for old pwds and kwallet for kde stuff
   #security.pam.services.sddm.enableGnomeKeyring = true;
   security.pam.services.sddm.kwallet.enable = true;
-  
+
   # additional KDE packages
   environment.systemPackages = with pkgs; [
     kdePackages.filelight
@@ -34,13 +34,13 @@
     kdePackages.kolourpaint
     kdePackages.krohnkite
     krita
-    seahorse 
+    seahorse
     kde-rounded-corners
     #touchegg
   ];
-  
+
   # enable touchegg, for gestures
-  #services.touchegg.enable = true; 
+  #services.touchegg.enable = true;
 
   # removes preinstalled KDE packages
   environment.plasma6.excludePackages = with pkgs.kdePackages; [

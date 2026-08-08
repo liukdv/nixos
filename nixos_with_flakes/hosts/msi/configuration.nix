@@ -5,7 +5,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/common.nix
-    ../../modules/profiles/workstation.nix
+    ../../modules/profiles/heavy.nix
   ];
 
   networking.hostName = "liukdv-msi-nixos";

@@ -2,7 +2,7 @@
 { config, pkgs, ... }:
 
 {
-  
+
   #users.groups.keyd = {};
 
   services.keyd = {
@@ -13,10 +13,10 @@
 
       settings = {
         main = {
-	  # Capslock enables extend layer 
+	  # Capslock enables extend layer
           capslock = "layer(extend)";
 
-	  # Both Shift keys together toggle Caps Lock - enabled in kde keyboard settings options 
+	  # Both Shift keys together toggle Caps Lock - enabled in kde keyboard settings options
           leftshift = "leftshift";
           rightshift = "rightshift";
           #"leftshift+rightshift" = "capslock";

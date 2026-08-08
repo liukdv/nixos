@@ -1,15 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  # @todo: These imports are changed from configuration.nix because the configuration is split into modules.
   imports =
-    [ 
+    [
       ./desktop/plasma.nix
       ./programs/bash.nix
       ./programs/git.nix
+      ./programs/keyd.nix
     ];
 
-  # enable firmware updates 
+  # enable firmware updates
   services.fwupd.enable = true; # sudo fwupdmgr refresh | sudo fwupdmgr get-updates | sudo fwupdmgr update
 
   # Folder /tmp settings - decided to leave default 10d
@@ -32,6 +32,12 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  # Logitech mouse
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
+  # Enable ratbagd service for Piper
+  services.ratbagd.enable = true;
+
   # Set your time zone / Locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -46,7 +52,7 @@
     LC_TELEPHONE = "it_IT.UTF-8";
     LC_TIME = "it_IT.UTF-8";
   };
-  
+
   # Configure keymap
   services.xserver.xkb = {
     layout = "us";
@@ -94,6 +100,66 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # List packages installed in system profile
+  # To search: nix search nixpkgs wget || nix-locate bin/wget
+  environment.systemPackages = with pkgs; [
+  # System utilities
+  file
+  gparted
+  jq
+  libnotify
+  ripgrep
+  tree
+  wget
+  keyd
+  qmk
+  whois
+
+  # Development tools
+  gh
+  git
+  neovim
+  python314
+  vim
+  wl-clipboard
+  emacs
+  meld
+  nix-prefetch-git
+  postman
+  uv
+  vscode.fhs
+
+  # Media & productivity
+  mpv
+  speedcrunch
+  xournalpp
+  calibre
+  libreoffice
+  obsidian
+  vlc
+
+  # Internet & communication
+  firefox
+  discord
+  spotify
+  telegram-desktop
+
+  # Gaming - steam enabled with dedicated part
+  #gfn-electron
+  #steam
+  #steam-run
+
+  # Test
+  #sl
+  ];
+
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
   # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   #programs.mtr.enable = true;
   #programs.gnupg.agent = {
@@ -103,7 +169,7 @@
 
   # Enable the OpenSSH daemon.
   #services.openssh.enable = true;
-  
+
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ... ];
   #networking.firewall.allowedUDPPorts = [ ... ];
@@ -127,13 +193,14 @@
   # manual update with flatpak update!
   services.flatpak.enable = true;
 
-  # Keep a copy of this configuration file in the system build
-  # @todo: This option is disabled because system.copySystemConfiguration cannot be used with flakes.
+  # Keep a copy of this configuration.nix in the system build
+  # This option is disabled because system.copySystemConfiguration cannot be used with flakes.
   #system.copySystemConfiguration = true;
 
   # Optimize space
   # remove duplicate files through hard links
   nix.settings.auto-optimise-store = true;
+
   # garbage collector at 03:15 only unused packages
   #nix.gc.automatic = true;
 }

@@ -13,24 +13,24 @@ in
   environment.sessionVariables = {
     # Forces SW rendering for cursor - due to nvidia error
     KWIN_FORCE_SW_CURSOR = "1";
-    # remove flood - JUST SILENCE, NOT FIX! 
+    # remove flood - JUST SILENCE, NOT FIX!
     #QT_LOGGING_RULES = "kwin_scene_opengl=false";
   };
-  
+
   # Fix systemd modprobe early call at boot - spam message, may be solved
   # The unit calls "modprobe" directly; on NixOS modprobe is provided by pkgs.kmod.
   systemd.services."modprobe@" = {
     overrideStrategy = "asDropin";
     serviceConfig.ExecSearchPath = "${pkgs.kmod}/bin";
   };
-  
+
   # also QT and other nvidia should be removed (or fixed) one day
- 
+
   # ============================================================================
   # KERNEL PARAMETERS & BOOT - SUSPEND/RESUME FIXES
   # ============================================================================
-  
-  # 0. 
+
+  # 0.
   #boot.extraModprobeConfig = ''
   #options nvidia_modeset vblank_sem_control=0
   #'';
@@ -44,10 +44,10 @@ in
   ];
 
   # 1. Early KMS (Kernel Mode Setting): Modules loaded in the initial RAM disk (initrd)
-  boot.initrd.kernelModules = [ 
-    "i915" 
-    ]; 
-  
+  boot.initrd.kernelModules = [
+    "i915"
+    ];
+
   # 2. Modules loaded after initrd, but before userspace
   #boot.kernelModules = [
     #"nvidia"
@@ -57,7 +57,7 @@ in
   #];
 
   # 2. Blacklist problematic modules
-  boot.blacklistedKernelModules = [ 
+  boot.blacklistedKernelModules = [
     #"spd5118"     # RAM temperature
     "thunderbolt"  # Prevents Thunderbolt issues
     "ucsi_acpi"    # Prevents USB-C/charging issues
@@ -92,7 +92,7 @@ in
     modesetting.enable = true; # Required for NVIDIA DRM/KMS
     open = true;  # Use Nvidia open/closed kernel modules (open should be better)
     package = config.boot.kernelPackages.nvidiaPackages.stable; # stable, beta, production
-    
+
     powerManagement.enable = false; # Nvidia power-management, relevant for suspend/resume and GPU state.
     #powerManagement.kernelSuspendNotifier = true;
 
@@ -101,12 +101,12 @@ in
 
     # PRIME configuration for hybrid graphics (Intel iGPU + NVIDIA dGPU)
     prime = lib.mkIf (gpuMode != "dgpu-only") (
-      if gpuMode == "hybrid-offload" then {  
+      if gpuMode == "hybrid-offload" then {
 	offload.enable = true;
         offload.enableOffloadCmd = true;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
-      } 
+      }
       else { # prime-sync mode
         sync.enable = true;
         intelBusId = "PCI:0:2:0";
@@ -130,7 +130,7 @@ in
       HoldoffTimeoutSec = "30s";
       IdleAction = "ignore";
 
-      # disable hibernation and suspend 
+      # disable hibernation and suspend
       HandlePowerKey = "poweroff";
       HandleSuspendKey = "ignore";
       HandleSuspendKeyLongPress = "ignore";

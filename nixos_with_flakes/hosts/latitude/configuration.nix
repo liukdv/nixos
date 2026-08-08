@@ -1,11 +1,10 @@
 { ... }:
 
 {
-  # @todo: Verify the shared and lightweight modules against the Latitude's actual requirements.
   imports = [
     ./hardware-configuration.nix
     ../../modules/common.nix
-    ../../modules/profiles/lightweight.nix
+    ../../modules/profiles/light.nix
   ];
 
   networking.hostName = "liukdv-latitude-nixos";
