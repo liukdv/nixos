@@ -118,6 +118,7 @@
   # Development tools
   gh
   git
+  gnumake
   neovim
   python314
   vim
