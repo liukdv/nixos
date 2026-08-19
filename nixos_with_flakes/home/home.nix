@@ -7,6 +7,19 @@
 
   home.packages = [ ];
 
-  # Add user-level Home Manager configuration here when needed.
   programs.home-manager.enable = true;
+
+  programs.git = {
+    enable = true;
+
+    settings = {
+      init.defaultBranch = "main";
+      pull.rebase = false;
+
+      merge.ours = {
+        driver = true;
+        name = "Keep our version during merge";
+      };
+    };
+  };
 }
