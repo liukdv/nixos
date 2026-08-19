@@ -1,4 +1,4 @@
-# /etc/nixos/keyd.nix
+# ~/Documents/mine/configs/nix/nixos_with_flakes/modules/programs/keyd.nix
 { config, pkgs, ... }:
 
 {

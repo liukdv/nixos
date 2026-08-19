@@ -1,4 +1,4 @@
-# /etc/nixos/home/bash.nix
+# ~/Documents/mine/configs/nix/nixos_with_flakes/modules/programs/bash.nix
 { config, pkgs, ... }:
 
 {

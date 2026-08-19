@@ -1,3 +1,4 @@
+ # ~/Documents/mine/configs/nix/nixos_with_flakes/modules/profiles/light.nix
 { config, pkgs, lib, ... }:
 
 {

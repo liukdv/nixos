@@ -1,4 +1,4 @@
-# /etc/nixos/plasma.nix
+#  # ~/Documents/mine/configs/nix/nixos_with_flakes/modules/desktop/plasma.nix
 { config, pkgs, ... }:
 
 {

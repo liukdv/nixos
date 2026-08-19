@@ -1,3 +1,4 @@
+# ~/Documents/mine/configs/nix/nixos_with_flakes/modules/programs/podman.nix
 { config, pkgs, ... }:
 {
   # Enable Podman with Docker compatibility

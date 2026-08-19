@@ -1,3 +1,4 @@
+# ~/Documents/mine/configs/nix/nixos_with_flakes/modules/common.nix
 { config, pkgs, lib, ... }:
 
 {
