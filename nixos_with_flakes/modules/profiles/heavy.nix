@@ -32,7 +32,6 @@
   #docker
   gcc-arm-embedded
   google-cloud-sdk-gce
-  kiro
   kubectl
   jdk
   minikube
