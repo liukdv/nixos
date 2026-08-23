@@ -109,40 +109,41 @@
   gparted
   jq
   libnotify
-  ripgrep
-  tree
-  wget
   keyd
   qmk
+  ripgrep
+  tree
   whois
-
+  wget
+  
   # Development tools
+  emacs
   gh
   git
   gnumake
-  neovim
-  python314
-  vim
-  wl-clipboard
-  emacs
+  go
   meld
+  neovim
   nix-prefetch-git
+  python314
   postman
-  uv
+  vim
   vscode.fhs
+  wl-clipboard
+  uv
 
   # Media & productivity
-  mpv
-  speedcrunch
-  xournalpp
   calibre
   libreoffice
+  mpv
   obsidian
+  speedcrunch
+  xournalpp
   vlc
 
   # Internet & communication
-  firefox
   discord
+  firefox
   spotify
   telegram-desktop
 
