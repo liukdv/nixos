@@ -118,6 +118,8 @@
   
   # Development tools
   emacs
+  gcc
+  gdb
   gh
   git
   gnumake
@@ -125,6 +127,7 @@
   meld
   neovim
   nix-prefetch-git
+  pkg-config
   python314
   postman
   vim
