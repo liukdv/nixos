@@ -15,6 +15,7 @@
   appimage-run
   bind
   efibootmgr
+  ffmpeg
   libcamera
   libva-utils
   mesa-demos
@@ -58,6 +59,7 @@
   chromium
   google-chrome
   proton-vpn
+  yt-dlp
 
   # Virtualization
   #virtualbox
