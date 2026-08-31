@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   home.username = "liukdv";
@@ -6,6 +6,14 @@
   home.stateVersion = "26.05";
 
   home.packages = [ ];
+
+  home.sessionVariables = {
+    GOPATH = "${config.home.homeDirectory}/.go";
+  };
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.go/bin"
+  ];
 
   programs.home-manager.enable = true;
 
