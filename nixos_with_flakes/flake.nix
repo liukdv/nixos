@@ -35,9 +35,7 @@
 
         liukdv-latitude-nixos = mkHost ./hosts/latitude/configuration.nix;
 
-        # @todo: Verify the MSI's desired Nixpkgs release before enabling it.
-        # @todo: Enable MSI after replacing its placeholder hardware configuration.
-        # liukdv-msi-nixos = mkHost ./hosts/msi/configuration.nix;
+        liukdv-msi-nixos = mkHost ./hosts/msi/configuration.nix;
       };
     };
 }
