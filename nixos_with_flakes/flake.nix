@@ -33,10 +33,10 @@
       nixosConfigurations = {
         liukdv-dellG-nixos = mkHost ./hosts/dellg/configuration.nix;
 
-        # @todo: Verify each host's desired Nixpkgs release before enabling it.
-        # @todo: Enable these after replacing their placeholder hardware configurations:
-        #
-        # liukdv-latitude-nixos = mkHost ./hosts/latitude/configuration.nix;
+        liukdv-latitude-nixos = mkHost ./hosts/latitude/configuration.nix;
+
+        # @todo: Verify the MSI's desired Nixpkgs release before enabling it.
+        # @todo: Enable MSI after replacing its placeholder hardware configuration.
         # liukdv-msi-nixos = mkHost ./hosts/msi/configuration.nix;
       };
     };
