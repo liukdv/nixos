@@ -22,7 +22,6 @@
   pciutils
   piper
   traceroute
-  unetbootin
   wev
 
   # Development tools

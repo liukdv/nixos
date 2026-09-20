@@ -33,9 +33,10 @@
     kdePackages.kompare
     kdePackages.kolourpaint
     kdePackages.krohnkite
+    kdePackages.isoimagewriter
+    kde-rounded-corners
     krita
     seahorse
-    kde-rounded-corners
     #touchegg
   ];
 
