@@ -147,6 +147,7 @@
   # Internet & communication
   discord
   firefox
+  qbittorrent
   spotify
   telegram-desktop
 
