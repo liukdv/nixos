@@ -87,6 +87,10 @@
    };
 
      environment.sessionVariables = {
+      # ===== PATH =====
+      # Add the npm global bin dir (claude, codex, gemini...) to PATH
+      PATH = [ "$HOME/.local/share/npm_installs/bin" ];
+
       # ===== HISTORY CONFIGURATION =====
       # Control what gets saved to history
       HISTCONTROL="ignoreboth";
