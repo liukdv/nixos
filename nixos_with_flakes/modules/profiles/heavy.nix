@@ -32,13 +32,14 @@
   #docker
   gcc-arm-embedded
   google-cloud-sdk-gce
-  kubectl
+  k3s
   jdk
   minikube
   nodejs
   ollama
   rustc
   terraform
+  tmux
 
   # Hacker
   trufflehog
