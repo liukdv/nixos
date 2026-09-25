@@ -40,6 +40,8 @@
     #touchegg
   ];
 
+  programs.kdeconnect.enable = true;
+
   # enable touchegg, for gestures
   #services.touchegg.enable = true;
 
