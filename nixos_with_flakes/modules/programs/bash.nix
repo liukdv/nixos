@@ -52,6 +52,10 @@
       # This command is changed to update and rebuild the selected flake host.
       sysupdatewipe = "cd /home/liukdv/Documents/mine/configs/nix/nixos_with_flakes && nix flake update && sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +2 && sudo nixos-rebuild switch --flake .#$(hostname) && sudo nix-collect-garbage";
 
+      # other updates:
+      # flatpak update (updates all flatpaks installed)
+      # npm update -g (updates all npm globally installed)
+
       # TTS
       say = "spd-say";
 
