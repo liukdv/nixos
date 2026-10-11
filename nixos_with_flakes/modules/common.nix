@@ -113,6 +113,7 @@
   qmk
   ripgrep
   tree
+  usbutils
   whois
   wget
   
