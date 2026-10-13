@@ -19,7 +19,6 @@
   libcamera
   libva-utils
   mesa-demos
-  pciutils
   piper
   traceroute
   wev

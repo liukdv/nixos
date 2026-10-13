@@ -110,6 +110,7 @@
   jq
   libnotify
   keyd
+  pciutils
   qmk
   ripgrep
   tree
