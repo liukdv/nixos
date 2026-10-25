@@ -105,6 +105,7 @@
   # To search: nix search nixpkgs wget || nix-locate bin/wget
   environment.systemPackages = with pkgs; [
   # System utilities
+  fd
   file
   gparted
   jq
@@ -114,10 +115,11 @@
   qmk
   ripgrep
   tree
+  unzip
   usbutils
   whois
   wget
-  
+
   # Development tools
   emacs
   gcc
@@ -126,6 +128,7 @@
   git
   gnumake
   go
+  lazygit
   meld
   neovim
   nix-prefetch-git
