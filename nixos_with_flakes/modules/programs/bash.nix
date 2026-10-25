@@ -39,6 +39,8 @@
       text="kwrite";
       stext="sudo kwrite";
       snvim="sudo -E nvim";
+      lvim="env NVIM_APPNAME=lazyvim nvim";
+      slvim="sudo -E env NVIM_APPNAME=lazyvim nvim";
 
       # Network utility - get your public IP address
       publicip = "dig +short myip.opendns.com @resolver1.opendns.com";
