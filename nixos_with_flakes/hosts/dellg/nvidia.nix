@@ -11,8 +11,8 @@ in
 
   # GL_INVALID_ENUM error generated. Invalid <face>. Invalid framebuffer status:  "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"
   environment.sessionVariables = {
-    # Forces SW rendering for cursor - due to nvidia error
-    KWIN_FORCE_SW_CURSOR = "1";
+    # FIXED: Forces SW rendering for cursor - due to nvidia error
+    # KWIN_FORCE_SW_CURSOR = "1";
     # remove flood - JUST SILENCE, NOT FIX!
     #QT_LOGGING_RULES = "kwin_scene_opengl=false";
   };
