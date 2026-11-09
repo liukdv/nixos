@@ -54,7 +54,7 @@
 
   # Internet & communication
   amule
-  brave
+  #brave
   chromium
   google-chrome
   proton-vpn

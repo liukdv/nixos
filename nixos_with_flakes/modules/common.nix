@@ -10,6 +10,11 @@
       ./programs/keyd.nix
     ];
 
+  services.espanso = {
+    enable = true;
+    package = pkgs.espanso-wayland;
+  };
+
   # enable firmware updates
   services.fwupd.enable = true; # sudo fwupdmgr refresh | sudo fwupdmgr get-updates | sudo fwupdmgr update
 
@@ -136,7 +141,17 @@
   python314
   postman
   vim
-  vscode.fhs
+  # Temporary workaround for nixpkgs' outdated ripgrep path in VS Code 1.144.0.
+  # The legacy link also supports Todo Tree; remove when both are fixed upstream.
+  (vscode.overrideAttrs (old: {
+    postPatch = (lib.replaceStrings
+      [ "@vscode/ripgrep/bin/rg" ]
+      [ "@vscode/ripgrep-universal/bin/linux-x64/rg" ]
+      old.postPatch) + ''
+        mkdir -p resources/app/node_modules/@vscode/ripgrep/bin
+        ln -sf ${pkgs.ripgrep}/bin/rg resources/app/node_modules/@vscode/ripgrep/bin/rg
+      '';
+  })).fhs
   wl-clipboard
   uv
 
