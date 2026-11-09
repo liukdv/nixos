@@ -228,6 +228,8 @@
   # remove duplicate files through hard links
   nix.settings.auto-optimise-store = true;
 
-  # garbage collector at 03:15 only unused packages
-  #nix.gc.automatic = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
 }

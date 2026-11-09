@@ -46,13 +46,12 @@
       publicip = "dig +short myip.opendns.com @resolver1.opendns.com";
       # Uses DNS query to OpenDNS to get external IP (faster than curl to web services)
 
-      # normal: normal update with garbage collection
-      # This command is changed to update and rebuild the selected flake host.
-      sysupdate = "cd /home/liukdv/Documents/mine/configs/nix/nixos_with_flakes && nix flake update && sudo nixos-rebuild switch --flake .#$(hostname) && sudo nix-collect-garbage";
+      # Keep the current generation and five previous ones after a successful rebuild.
+      # Refresh GRUB before garbage collection to remove obsolete boot entries.
+      sysupdate = "cd /home/liukdv/Documents/mine/configs/nix/nixos_with_flakes && nix flake update && sudo nixos-rebuild switch --flake .#$(hostname) && sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +6 && sudo /run/current-system/bin/switch-to-configuration boot && sudo nix-collect-garbage";
 
-      # aggressive: update and leave only last 2 and new generation, with garbage collection
-      # This command is changed to update and rebuild the selected flake host.
-      sysupdatewipe = "cd /home/liukdv/Documents/mine/configs/nix/nixos_with_flakes && nix flake update && sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +2 && sudo nixos-rebuild switch --flake .#$(hostname) && sudo nix-collect-garbage";
+      # More aggressive: keep the current generation and only two previous ones.
+      sysupdatewipe = "cd /home/liukdv/Documents/mine/configs/nix/nixos_with_flakes && nix flake update && sudo nixos-rebuild switch --flake .#$(hostname) && sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo /run/current-system/bin/switch-to-configuration boot && sudo nix-collect-garbage";
 
       # other updates:
       # flatpak update (updates all flatpaks installed)
